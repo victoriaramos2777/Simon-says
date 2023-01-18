@@ -1,118 +1,118 @@
-import '../assets/styles/style.scss'
+import '../assets/styles/style.scss';
 
-// arreglo para almacenar los colores
-let colors =['red','blue', 'green', 'yellow'];
+// Arreglo que alamacene los colors
+let colors = ['red', 'blue', 'green', 'yellow'];
 
-// patron del juego
+// Patron del juego
+let gameP = [];
 
-let gameP= [];
-
-//patron de clicks
+// Patron de clicks 
 let gameClicksP = [];
 
-//funcion para iniciar el juego 
-
+// Funcion para iniciar el juego
 let start = false;
 let level = 0;
 
-// evento para que registre una tecla e inicie el juego
-
-$(document).keydown(()=>{
-  if(!start){
-    $('#level-title').text('Level' + level);
+// Evento para que registre una tecla e inice el juego
+$(document).keydown(() => {
+  if (!start) {
+    $('#level-title').text('Level ' + level);
     start = true;
     nextSequence();
   }
+
 });
 
-//evento ala que el usuario le esta dando click
-
-$('.container__row__btn').click(function(){
+// Evento al que el usuario le esta dando click
+$('.container__row__btn').click(function () {
   let userColor = $(this).attr('id');
+
   gameClicksP.push(userColor);
+
   playSound(userColor);
 
   animateClick(userColor);
 
-  checkAnswer(gameClicksP.length-1);
-})
+  checkAnswer(gameClicksP.length - 1);
+});
 
 
-//funcion para crear la secuencia del juego 
 
+
+
+// Funcion para crear la secuencia del juego
 function nextSequence() {
-  //reiniciar los click
-  gameClicksP =[];
+  // Reiniciar los clicks
+  gameClicksP = [];
 
-  //actualizar el nivel 
+  // Actualizar el nivel
+
+
   level++;
-  $('#level-titel').text('Level' + level);
+  $('#level-title').text('Level ' + level);
 
-  //numeros aleatorios para el patron
-  let randomNumber = Math.random() *4;
+  // Numeros aleatorios para el patron
+  let randomNumber = Math.random() * 4;
   randomNumber = Math.floor(randomNumber);
 
-  //usar numero aleatorio  para llamar el btn seleccionado
+  // Usar numero aleatorio para llamar el btn seleccionado
   let randomColor;
-  randomColor= colors[randomNumber];
+  randomColor = colors[randomNumber];
 
-  //almacenar el numero en el patron 
+  // Alamacenar el numero en el patron
   gameP.push(randomColor);
-  $('#' + randomColor).fadein(100).fadeOut(100).
-  fadein(100);
+
+  $('#' + randomColor).fadeIn(100).fadeOut(100).fadeIn(100);
+
   playSound(randomColor);
 }
 
-
-//funcion para confirmar los clicks de lo usuario
-
+// Funcion para confirmar los clicks del usuario
 function checkAnswer(currentLevel) {
-  if (gameP[currentLevel]===gameClicksP[currentLevel]) {
-    if (gameP.length===gameClicksP.length) {
-      setTimeout(()=>{
+  if (gameP[currentLevel] === gameClicksP[currentLevel]) {
+    if (gameP.length === gameClicksP.length) {
+      setTimeout(() => {
         nextSequence();
-      },1000);
+      }, 1000);
     }
-    
-  }else{
-    //mostrar sonido de error
+  } else {
+    // Mostrar sonido de error
     playSound('wrong');
 
-    //clases para finalizar el juego
+    // Clases para finalizar el juego
     $('body').addClass('game-over');
 
-    //cambiar titulo para poder reiniciarlo
-    $('#level-title').text('Game Over, Please restart!');
+    // Cambiar titulo para poder reiniciarlo
+    $('#level-title').text('Game Over, please restart!');
 
-    //quitar las clases agregadas
-    setTimeout(()=>{
+    // Quitar la clases agregada
+    setTimeout(() => {
       $('body').removeClass('game-over');
-    },400);
+    }, 400);
 
-    //llamar funcion para reiniciar el juego
-    startOver()
+    // Llamar funcion para reiniciar el juego
+    startOver();
   }
-  
 }
-// funcion para emular sonidos 
+
+// Funcion para emular sonidos
 function playSound(color) {
   let audio = new Audio('../assets/sounds/' + color + '.mp3');
-  audio.play(); 
+
+  audio.play();
 }
 
-// funcion para animar el click
+// Funcion para animar el click
 function animateClick(userColor) {
-  $('#'+userColor).addClass('pressed');
+  $('#' + userColor).addClass('pressed');
 
-  //quitar la clases agregadas
-
-  setTimeout(()=>{
+  // Quitar la clases agregada
+  setTimeout(() => {
     $('#' + userColor).removeClass('pressed');
   }, 100);
-  
 }
 
-// funcion para reiniciar el juego
+// Funcion para reiniciar el juego
 function startOver() {
   level = 0;
   gameP = [];
