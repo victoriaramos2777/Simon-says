@@ -5,7 +5,7 @@ let colors =['red','blue', 'green', 'yellow'];
 
 // patron del juego
 
-let gamep = [];
+let gameP= [];
 
 //patron de clicks
 let gameClicksP = [];
@@ -32,9 +32,9 @@ $('.container__row__btn').click(function(){
   gameClicksP.push(userColor);
   playSound(userColor);
 
-  annimateClick(userColor);
+  animateClick(userColor);
 
-  checkAnswer(gameClicksp.length-1);
+  checkAnswer(gameClicksP.length-1);
 })
 
 
@@ -57,7 +57,7 @@ function nextSequence() {
   randomColor= colors[randomNumber];
 
   //almacenar el numero en el patron 
-  gamep.push(randomColor);
+  gameP.push(randomColor);
   $('#' + randomColor).fadein(100).fadeOut(100).
   fadein(100);
   playSound(randomColor);
@@ -67,8 +67,8 @@ function nextSequence() {
 //funcion para confirmar los clicks de lo usuario
 
 function checkAnswer(currentLevel) {
-  if (gamep[currentLevel]===gameClicksP[currentLevel]) {
-    if (gamep.length===gameClicksP.length) {
+  if (gameP[currentLevel]===gameClicksP[currentLevel]) {
+    if (gameP.length===gameClicksP.length) {
       setTimeout(()=>{
         nextSequence();
       },1000);
@@ -100,4 +100,21 @@ function playSound(color) {
   audio.play(); 
 }
 
+// funcion para animar el click
+function animateClick(userColor) {
+  $('#'+userColor).addClass('pressed');
 
+  //quitar la clases agregadas
+
+  setTimeout(()=>{
+    $('#' + userColor).removeClass('pressed');
+  }, 100);
+  
+}
+
+// funcion para reiniciar el juego
+function startOver() {
+  level = 0;
+  gameP = [];
+  start = false;
+}
