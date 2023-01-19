@@ -1,12 +1,12 @@
-import '../assets/styles/style.scss';
+import "../assets/styles/style.scss";
 
 // Arreglo que alamacene los colors
-let colors = ['red', 'blue', 'green', 'yellow'];
+let colors = ["red", "blue", "green", "yellow"];
 
 // Patron del juego
 let gameP = [];
 
-// Patron de clicks 
+// Patron de clicks
 let gameClicksP = [];
 
 // Funcion para iniciar el juego
@@ -16,16 +16,15 @@ let level = 0;
 // Evento para que registre una tecla e inice el juego
 $(document).keydown(() => {
   if (!start) {
-    $('#level-title').text('Level ' + level);
+    $("#level-title").text("Level " + level);
     start = true;
     nextSequence();
   }
-
 });
 
 // Evento al que el usuario le esta dando click
-$('.container__row__btn').click(function () {
-  let userColor = $(this).attr('id');
+$(".container__row__btn").click(function () {
+  let userColor = $(this).attr("id");
 
   gameClicksP.push(userColor);
 
@@ -36,10 +35,6 @@ $('.container__row__btn').click(function () {
   checkAnswer(gameClicksP.length - 1);
 });
 
-
-
-
-
 // Funcion para crear la secuencia del juego
 function nextSequence() {
   // Reiniciar los clicks
@@ -47,9 +42,8 @@ function nextSequence() {
 
   // Actualizar el nivel
 
-
   level++;
-  $('#level-title').text('Level ' + level);
+  $("#level-title").text("Level " + level);
 
   // Numeros aleatorios para el patron
   let randomNumber = Math.random() * 4;
@@ -62,7 +56,10 @@ function nextSequence() {
   // Alamacenar el numero en el patron
   gameP.push(randomColor);
 
-  $('#' + randomColor).fadeIn(100).fadeOut(100).fadeIn(100);
+  $("#" + randomColor)
+    .fadeIn(100)
+    .fadeOut(100)
+    .fadeIn(100);
 
   playSound(randomColor);
 }
@@ -77,17 +74,17 @@ function checkAnswer(currentLevel) {
     }
   } else {
     // Mostrar sonido de error
-    playSound('wrong');
+    playSound("wrong");
 
     // Clases para finalizar el juego
-    $('body').addClass('game-over');
+    $("body").addClass("game-over");
 
     // Cambiar titulo para poder reiniciarlo
-    $('#level-title').text('Game Over, please restart!');
+    $("#level-title").text("Game Over, please restart!");
 
     // Quitar la clases agregada
     setTimeout(() => {
-      $('body').removeClass('game-over');
+      $("body").removeClass("game-over");
     }, 400);
 
     // Llamar funcion para reiniciar el juego
@@ -97,18 +94,18 @@ function checkAnswer(currentLevel) {
 
 // Funcion para emular sonidos
 function playSound(color) {
-  let audio = new Audio('../assets/sounds/' + color + '.mp3');
+  let audio = new Audio("../assets/sounds/" + color + ".mp3");
 
   audio.play();
 }
 
 // Funcion para animar el click
 function animateClick(userColor) {
-  $('#' + userColor).addClass('pressed');
+  $("#" + userColor).addClass("pressed");
 
   // Quitar la clases agregada
   setTimeout(() => {
-    $('#' + userColor).removeClass('pressed');
+    $("#" + userColor).removeClass("pressed");
   }, 100);
 }
 
