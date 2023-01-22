@@ -19,5 +19,5 @@
 ## Puedes ver el resultado en el siguiente link
  -[]
 
-## GRACIAS POR LEERME!
+## GRACIAS POR LEER!
 
